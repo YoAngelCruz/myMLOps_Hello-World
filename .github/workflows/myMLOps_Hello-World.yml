@@ -71,4 +71,10 @@ jobs:
           
       - name: Deploy and Wait
         uses: okteto/actions/deploy@v1
+        env:
+          KUBECONFIG: ${{ steps.namespace.outputs.kubeconfig }}
+        with:
+          namespace: ${{secrets.OKTETO_NAMESPACE }}
+          manifest: manifests/linear_model_k8s.yaml
+          tag: ${{ secrets.DOCKER_USERNAME }}/tensorflow_${{secrets.MODEL_NAME}}:${{ github.sha }}
 
